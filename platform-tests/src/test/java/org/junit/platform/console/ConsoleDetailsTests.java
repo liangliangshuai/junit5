@@ -16,9 +16,12 @@ import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.junit.platform.commons.util.ReflectionUtils.findMethods;
 import static org.junit.platform.commons.util.ReflectionUtils.getFullyQualifiedMethodName;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
@@ -33,7 +36,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicContainer;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -42,6 +44,9 @@ import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.console.options.Details;
 import org.junit.platform.console.options.Theme;
+import org.junit.platform.engine.TestSource;
+import org.junit.platform.engine.support.descriptor.ClassSource;
+import org.junit.platform.engine.support.descriptor.FileSource;
 
 /**
  * @since 1.0
@@ -95,11 +100,15 @@ class ConsoleDetailsTests {
 					String displayName = methodName + "() " + theme.name();
 					String dirName = "console/details/" + containerName.toLowerCase();
 					String outName = caption + ".out.txt";
-					tests.add(DynamicTest.dynamicTest(displayName, new Runner(dirName, outName, args)));
+					Runner runner = new Runner(dirName, outName, args);
+					FileSource source = FileSource.from(new File(dirName, outName));
+					tests.add(dynamicTest(displayName, source, runner));
 				}
 			}
 		}
-		map.forEach((details, tests) -> nodes.add(DynamicContainer.dynamicContainer(details.name(), tests)));
+		// TestSource source = DirectorySource.from(new File("src/test/resources/console/details"));
+		TestSource source = ClassSource.from(Details.class);
+		map.forEach((details, tests) -> nodes.add(dynamicContainer(details.name(), source, tests)));
 		return nodes;
 	}
 

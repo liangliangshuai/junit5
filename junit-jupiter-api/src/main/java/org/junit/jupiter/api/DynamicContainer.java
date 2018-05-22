@@ -17,6 +17,7 @@ import java.util.stream.StreamSupport;
 
 import org.apiguardian.api.API;
 import org.junit.platform.commons.util.Preconditions;
+import org.junit.platform.engine.TestSource;
 
 /**
  * A {@code DynamicContainer} is a container generated at runtime.
@@ -49,7 +50,25 @@ public class DynamicContainer extends DynamicNode {
 	 * @see #dynamicContainer(String, Stream)
 	 */
 	public static DynamicContainer dynamicContainer(String displayName, Iterable<? extends DynamicNode> dynamicNodes) {
-		return new DynamicContainer(displayName, StreamSupport.stream(dynamicNodes.spliterator(), false));
+		return dynamicContainer(displayName, null, dynamicNodes);
+	}
+
+	/**
+	 * Factory for creating a new {@code DynamicContainer} for the supplied display
+	 * name and collection of dynamic nodes.
+	 *
+	 * <p>The collection of dynamic nodes must not contain {@code null} elements.
+	 *
+	 * @param displayName the display name for the dynamic container; never
+	 * {@code null} or blank
+	 * @param testSource the test source for the dynamic test; can be {@code null}
+	 * @param dynamicNodes collection of dynamic nodes to execute;
+	 * never {@code null}
+	 * @see #dynamicContainer(String, Stream)
+	 */
+	public static DynamicContainer dynamicContainer(String displayName, TestSource testSource,
+			Iterable<? extends DynamicNode> dynamicNodes) {
+		return new DynamicContainer(displayName, testSource, StreamSupport.stream(dynamicNodes.spliterator(), false));
 	}
 
 	/**
@@ -65,13 +84,31 @@ public class DynamicContainer extends DynamicNode {
 	 * @see #dynamicContainer(String, Iterable)
 	 */
 	public static DynamicContainer dynamicContainer(String displayName, Stream<? extends DynamicNode> dynamicNodes) {
-		return new DynamicContainer(displayName, dynamicNodes);
+		return dynamicContainer(displayName, null, dynamicNodes);
+	}
+
+	/**
+	 * Factory for creating a new {@code DynamicContainer} for the supplied display
+	 * name and stream of dynamic nodes.
+	 *
+	 * <p>The stream of dynamic nodes must not contain {@code null} elements.
+	 *
+	 * @param displayName the display name for the dynamic container; never
+	 * {@code null} or blank
+	 * @param testSource the test source for the dynamic test; can be {@code null}
+	 * @param dynamicNodes stream of dynamic nodes to execute;
+	 * never {@code null}
+	 * @see #dynamicContainer(String, Iterable)
+	 */
+	public static DynamicContainer dynamicContainer(String displayName, TestSource testSource,
+			Stream<? extends DynamicNode> dynamicNodes) {
+		return new DynamicContainer(displayName, testSource, dynamicNodes);
 	}
 
 	private final Stream<? extends DynamicNode> children;
 
-	private DynamicContainer(String displayName, Stream<? extends DynamicNode> children) {
-		super(displayName);
+	private DynamicContainer(String displayName, TestSource testSource, Stream<? extends DynamicNode> children) {
+		super(displayName, testSource);
 		Preconditions.notNull(children, "children must not be null");
 		this.children = children;
 	}
@@ -83,5 +120,4 @@ public class DynamicContainer extends DynamicNode {
 	public Stream<? extends DynamicNode> getChildren() {
 		return children;
 	}
-
 }

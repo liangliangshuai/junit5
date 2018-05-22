@@ -23,6 +23,7 @@ import org.apiguardian.api.API;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.function.ThrowingConsumer;
 import org.junit.platform.commons.util.Preconditions;
+import org.junit.platform.engine.TestSource;
 
 /**
  * A {@code DynamicTest} is a test case generated at runtime.
@@ -59,7 +60,22 @@ public class DynamicTest extends DynamicNode {
 	 * @see #stream(Iterator, Function, ThrowingConsumer)
 	 */
 	public static DynamicTest dynamicTest(String displayName, Executable executable) {
-		return new DynamicTest(displayName, executable);
+		return new DynamicTest(displayName, null, executable);
+	}
+
+	/**
+	 * Factory for creating a new {@code DynamicTest} for the supplied display
+	 * name and executable code block.
+	 *
+	 * @param displayName the display name for the dynamic test; never
+	 * {@code null} or blank
+	 * @param testSource the test source for the dynamic test; can be {@code null}
+	 * @param executable the executable code block for the dynamic test;
+	 * never {@code null}
+	 * @see #stream(Iterator, Function, ThrowingConsumer)
+	 */
+	public static DynamicTest dynamicTest(String displayName, TestSource testSource, Executable executable) {
+		return new DynamicTest(displayName, testSource, executable);
 	}
 
 	/**
@@ -101,8 +117,8 @@ public class DynamicTest extends DynamicNode {
 
 	private final Executable executable;
 
-	private DynamicTest(String displayName, Executable executable) {
-		super(displayName);
+	private DynamicTest(String displayName, TestSource testSource, Executable executable) {
+		super(displayName, testSource);
 		this.executable = Preconditions.notNull(executable, "executable must not be null");
 	}
 

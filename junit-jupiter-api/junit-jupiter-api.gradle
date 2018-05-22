@@ -1,9 +1,14 @@
+plugins {
+	id 'nebula.optional-base' version '3.0.3'
+}
+
 description = 'JUnit Jupiter API'
 
 dependencies {
 	api("org.opentest4j:opentest4j:${ota4jVersion}")
-	api(project(":junit-platform-commons"))
-	compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
+	api(project(':junit-platform-commons'))
+	compile(project(':junit-platform-engine'), optional)
+	compileOnly('org.jetbrains.kotlin:kotlin-stdlib')
 }
 
 jar {

@@ -12,9 +12,12 @@ package org.junit.jupiter.api;
 
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 
+import java.util.Optional;
+
 import org.apiguardian.api.API;
 import org.junit.platform.commons.util.Preconditions;
 import org.junit.platform.commons.util.ToStringBuilder;
+import org.junit.platform.engine.TestSource;
 
 /**
  * {@code DynamicNode} serves as the abstract base class for a container or a
@@ -29,8 +32,12 @@ public abstract class DynamicNode {
 
 	private final String displayName;
 
-	DynamicNode(String displayName) {
+	/** Custom test source instance to associate with this node or {@code null}. */
+	private final TestSource testSource;
+
+	DynamicNode(String displayName, TestSource testSource) {
 		this.displayName = Preconditions.notBlank(displayName, "displayName must not be null or blank");
+		this.testSource = testSource;
 	}
 
 	/**
@@ -38,6 +45,13 @@ public abstract class DynamicNode {
 	 */
 	public String getDisplayName() {
 		return this.displayName;
+	}
+
+	/**
+	 * Get the optional test source of this {@code DynamicNode}.
+	 */
+	public Optional<TestSource> getTestSource() {
+		return Optional.ofNullable(testSource);
 	}
 
 	@Override
