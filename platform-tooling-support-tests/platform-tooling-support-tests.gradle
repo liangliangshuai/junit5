@@ -31,5 +31,6 @@ dependencies {
 }
 
 test {
+	enabled = Boolean.getBoolean('platform.tooling.support.tests.enabled')
 	useJUnitPlatform()
 }

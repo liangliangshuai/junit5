@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolRequest {
+public class BuildRequest {
 
 	public static Builder builder() {
 		return new Builder();
@@ -43,9 +43,9 @@ public class ToolRequest {
 
 	public static class Builder {
 
-		private final ToolRequest request = new ToolRequest();
+		private final BuildRequest request = new BuildRequest();
 
-		public ToolRequest build() {
+		public BuildRequest build() {
 			request.arguments = List.copyOf(request.arguments);
 			return request;
 		}
