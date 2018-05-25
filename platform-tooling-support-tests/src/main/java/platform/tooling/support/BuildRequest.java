@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @since 1.3
+ */
 public class BuildRequest {
 
 	public static Builder builder() {

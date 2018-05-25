@@ -21,6 +21,9 @@ import java.util.spi.ToolProvider;
 
 import org.apache.commons.io.FileUtils;
 
+/**
+ * @since 1.3
+ */
 public class ToolSupport {
 
 	private static final String WRAPPER = "<wrapper>";

@@ -19,6 +19,9 @@ import platform.tooling.support.BuildRequest;
 import platform.tooling.support.BuildTool;
 import platform.tooling.support.ToolSupport;
 
+/**
+ * @since 1.3
+ */
 class MavenStarterTests {
 
 	@Test

@@ -21,6 +21,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * @since 1.3
+ */
 public class BuildResult {
 
 	int status = Integer.MIN_VALUE;

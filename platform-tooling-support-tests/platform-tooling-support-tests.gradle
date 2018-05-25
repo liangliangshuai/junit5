@@ -5,9 +5,7 @@ plugins {
 // https://github.com/schauder/degraph/issues/87
 degraph.enabled = false
 
-/*
-* Use Java 10.
-*/
+// Use Java 10
 project.ext.javaVersion = JavaVersion.VERSION_1_10
 afterEvaluate {
 	tasks.withType(JavaCompile) {
@@ -30,14 +28,10 @@ dependencies {
 }
 
 test {
-	/*
-	* Opt-in via system property: '-Dplatform.tooling.support.tests.enabled=true'.
-	*/
+	// Opt-in via system property: '-Dplatform.tooling.support.tests.enabled=true'
 	enabled = Boolean.getBoolean('platform.tooling.support.tests.enabled')
 
-	/*
-	* The standalone artifact is needed by Ant projects using its native <junitlauncher> task.
-	*/
+	// The standalone artifact is needed by Ant projects using its native <junitlauncher> task
 	dependsOn project(':junit-platform-console-standalone').jar
 
 	useJUnitPlatform()

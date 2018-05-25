@@ -14,6 +14,9 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * @since 1.3
+ */
 public enum BuildTool {
 
 	ANT("https://www.apache.org/dist/ant/binaries/${ARCHIVE}", "apache-ant-${VERSION}-bin.zip"),
