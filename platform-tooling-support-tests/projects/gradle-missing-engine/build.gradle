@@ -10,13 +10,10 @@ file('file.encoding.txt').write(System.getProperty('file.encoding'))
 
 repositories {
 	mavenLocal()
-	mavenCentral()
 }
 
 dependencies {
-	testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0') {
-		because 'needed to compile Jupiter tests // TODO use current junit-jupiter-api'
-	}
+	testImplementation('org.junit.jupiter:junit-jupiter-api:5.3.0-SNAPSHOT')
 }
 
 test {
